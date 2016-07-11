@@ -13,6 +13,7 @@ install:
 clean:
 	if [ -d bin ]; then rm -fR bin; fi
 	if [ -d dist ]; then rm -fR dist; fi
+	if [ -f md2slides-binary-release.zip ]; then rm md2slides-binary-release.zip; fi
 
 release:
 	./mk-website.sh
