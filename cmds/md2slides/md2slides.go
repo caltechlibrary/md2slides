@@ -110,6 +110,10 @@ section, p {
 	padding: 0.24em;
 	margin: 0.24em;
 }
+
+code {
+	color: teal;
+}
    </style>
    {{- end }}
 </head>
