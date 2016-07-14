@@ -104,6 +104,12 @@ nav {
 	text-align: left;
 	font-size: 60%;
 }
+
+section, p {
+	max-width: 95%;
+	padding: 0.24em;
+	margin: 0.24em;
+}
    </style>
    {{- end }}
 </head>
