@@ -81,8 +81,8 @@ var (
    {{else}}
    <style>
 body {
-	width: 100%;
-	height: 100%;
+	max-width: 100%;
+	max-height: 100%;
 	margin: 10%;
 	padding: 0;
 	font-size: 24px;
@@ -106,7 +106,7 @@ nav {
 }
 
 section, p {
-	max-width: 95%;
+	max-width: 85%;
 	padding: 0.24em;
 	margin: 0.24em;
 }
