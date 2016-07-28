@@ -19,3 +19,9 @@ release:
 	./mk-website.bash
 	./mk-release.bash	
 	
+save:
+	git commit -am "Quick save"
+	git push origin master
+
+publish:
+	./publish.bash
