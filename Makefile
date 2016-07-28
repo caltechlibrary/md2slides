@@ -5,7 +5,7 @@
 
 build:
 	go build -o bin/md2slides cmds/md2slides/md2slides.go
-	./mk-website.sh
+	./mk-website.bash
 
 install:
 	env GOBIN=$(HOME)/bin go install cmds/md2slides/md2slides.go
@@ -16,6 +16,6 @@ clean:
 	if [ -f md2slides-binary-release.zip ]; then rm md2slides-binary-release.zip; fi
 
 release:
-	./mk-website.sh
-	./mk-release.sh	
+	./mk-website.bash
+	./mk-release.bash	
 	
