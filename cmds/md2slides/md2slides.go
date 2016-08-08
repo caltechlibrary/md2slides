@@ -20,7 +20,6 @@
 package main
 
 import (
-	"bytes"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -29,12 +28,12 @@ import (
 	"strings"
 	"text/template"
 
-	// 3rd Part packages
-	"github.com/russross/blackfriday"
+	// Caltech Library packages
+	"github.com/caltechlibrary/md2slides"
 )
 
 const (
-	version = "v0.0.2"
+	version = md2slides.Version
 	license = `
 %s
 
@@ -54,87 +53,15 @@ const (
 `
 )
 
-// Slide is the metadata about a slide to be generated.
-type Slide struct {
-	CurNo   int
-	PrevNo  int
-	NextNo  int
-	FirstNo int
-	LastNo  int
-	FName   string
-	Title   string
-	Content string
-	CSSPath string
-}
-
 var (
 	showHelp          bool
 	showVersion       bool
 	showLicense       bool
 	presentationTitle string
-	defaultHTML       = `<!DOCTYPE html>
-<html>
-<head>
-   {{- if .Title -}}<title>{{ .Title }}</title>{{- end}}
-   {{- if .CSSPath -}}
-   <link href="{{ .CSSPath }}" rel="stylesheet" />
-   {{else}}
-   <style>
-body {
-	max-width: 100%;
-	max-height: 100%;
-	margin: 10%;
-	padding: 0;
-	font-size: 24px;
-	font-family: sans-serif;
-}
 
-ul {
-	list-style: circle;
-	text-indent: 0.25em;
-}
-
-nav {
-	position: absolute;
-   	bottom: 1em; 
-	margin:0;
-	padding:0.24em;
-	width: 100%;
-	height: 4em;
-	text-align: left;
-	font-size: 60%;
-}
-
-section, p {
-	max-width: 85%;
-	padding: 0.24em;
-	margin: 0.24em;
-}
-
-code {
-	color: teal;
-}
-   </style>
-   {{- end }}
-</head>
-<body>
-	<section>{{ .Content }}</section>
-	<nav>
-{{ if ne .CurNo .FirstNo -}}
-<a href="{{printf "%02d-%s.html" .FirstNo .FName}}">Home</a>
-{{- end}}
-{{ if gt .CurNo .FirstNo -}} 
-<a href="{{printf "%02d-%s.html" .PrevNo .FName}}">Prev</a>
-{{- end}}
-{{ if lt .CurNo .LastNo -}} 
-<a href="{{printf "%02d-%s.html" .NextNo .FName}}">Next</a>
-{{- end}}
-	</nav>
-</body>
-</html>
-`
-	cssPath       string
-	templateFName string
+	cssPath        string
+	templateFName  string
+	templateSource = md2slides.DefaultTemplateSource
 )
 
 func init() {
@@ -143,24 +70,7 @@ func init() {
 	flag.BoolVar(&showLicense, "l", false, "display license")
 	flag.StringVar(&presentationTitle, "title", "", "Presentation title")
 	flag.StringVar(&cssPath, "css", cssPath, "Specify the CSS file to use")
-	flag.StringVar(&templateFName, "template",
-		templateFName, "Specify an HTML template to use")
-}
-
-func makeSlide(tmpl *template.Template, slide *Slide) {
-	sname := fmt.Sprintf(`%02d-%s.html`, slide.CurNo, slide.FName)
-	fp, err := os.Create(sname)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "%s %s\n", sname, err)
-		os.Exit(1)
-	}
-	defer fp.Close()
-	err = tmpl.Execute(fp, slide)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "%s %s", sname, err)
-		os.Exit(1)
-	}
-	fmt.Printf("Wrote %s\n", sname)
+	flag.StringVar(&templateFName, "template", templateFName, "Specify an HTML template to use")
 }
 
 func main() {
@@ -184,7 +94,7 @@ func main() {
 		os.Exit(0)
 	}
 	if showVersion == true {
-		fmt.Printf("\n Version %s\n", version)
+		fmt.Printf(" Version %s\n", version)
 		os.Exit(0)
 	}
 	if showLicense == true {
@@ -198,9 +108,11 @@ func main() {
 			fmt.Fprintf(os.Stderr, "%s %s\n", templateFName, err)
 			os.Exit(1)
 		}
-		defaultHTML = string(src)
+		templateSource = string(src)
 	}
 
+	//FIXME: If it is markdown file then assign fname that value, otherwise it's a template add it to the
+	// list of templates to compile.
 	var fname string
 	args := flag.Args()
 	if len(args) > 0 {
@@ -218,32 +130,23 @@ func main() {
 	}
 
 	fname = strings.TrimSuffix(path.Base(fname), path.Ext(fname))
-	tmpl, err := template.New("slide").Parse(defaultHTML)
+	tmpl, err := template.New("slide").Parse(templateSource)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err)
 		os.Exit(1)
 	}
 
-	// Note: handle legacy CR/LF endings as well as normal LF line endings
-	if bytes.Contains(src, []byte("\r\n")) {
-		src = bytes.Replace(src, []byte("\r\n"), []byte("\n"), -1)
-	}
-	slides := bytes.Split(src, []byte("--\n"))
-
-	fmt.Printf("Slide count: %d\n", len(slides))
-	lastSlide := len(slides) - 1
-	for i, s := range slides {
-		data := blackfriday.MarkdownCommon(s)
-		makeSlide(tmpl, &Slide{
-			FName:   fname,
-			CurNo:   i,
-			PrevNo:  (i - 1),
-			NextNo:  (i + 1),
-			FirstNo: 0,
-			LastNo:  lastSlide,
-			Title:   presentationTitle,
-			Content: string(data),
-			CSSPath: cssPath,
-		})
+	// Build the slides
+	slides := md2slides.MarkdownToSlides(fname, presentationTitle, cssPath, src)
+	// Render the slides
+	for i, slide := range slides {
+		err := md2slides.MakeSlideFile(tmpl, slide)
+		if err == nil {
+			// Note: Give some feed back when slide written successful
+			fmt.Fprintf(os.Stdout, "wrote %02d-%s.html\n", slide.CurNo, slide.FName)
+		} else {
+			// Note: Display an error if we have a problem
+			fmt.Fprintf(os.Stderr, "Can't process slide %d, %s\n", i, err)
+		}
 	}
 }

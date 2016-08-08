@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function softwareCheck() {
-    for CMD in shorthand; do
+    for CMD in mkpage md2slides; do
         APP=$(which $CMD)
         if [ "$APP" = "" ]; then
             echo "Skipping, missing $CMD"
@@ -15,11 +15,11 @@ function mkPage () {
     content="$2"
     html="$3"
 
-    echo "Rendering $html from $content and $nav"
-    shorthand \
-        -e "{{navContent}} :import-markdown: $nav" \
-        -e "{{pageContent}} :import-markdown: $content" \
-        page.shorthand > $html
+    echo "Rendering $html"
+    mkpage \
+        "nav=$nav" \
+        "content=$content" \
+        page.tmpl > $html
 }
 
 function mkExample () {
@@ -28,11 +28,13 @@ function mkExample () {
     cd ..
 }
 
+echo "Checking for required software"
 softwareCheck
-echo "Generating website with shorthand"
+echo "Generating website with mkpage"
 mkPage nav.md index.md index.html
 mkPage nav.md README.md readme.html
 mkPage nav.md INSTALL.md installation.html
-mkPage nav.md LICENSE license.html
+mkPage nav.md "markdown:$(cat LICENSE)" license.html
 echo "Generating example presentation.md"
 mkExample
+

@@ -3,7 +3,7 @@
 <head>
     <title>Caltech Library's Digital Library Development Sandbox</title>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/site.css">
 </head>
 <body>
 <header>
@@ -25,18 +25,18 @@
 <section>
 <h1>md2slides</h1>
 
-<p>Convert a Markdown file into a sequence of HTML5 slides.</p>
+<p>Converts a Markdown file into a sequence of HTML5 slides.</p>
 
 <ul>
 <li>Use Markdown to write your presentation in one file</li>
-<li>Separate slides by &ldquo;&ndash;&rdquo; and a new line (e.g. \n versus \r\n)</li>
+<li>Separate slides by a new line, <code>--</code> and another new line (e.g. \n versus \r\n)</li>
 <li>Apply the simple default template or use your own</li>
 <li>Control Layout and display with HTML5 and CSS</li>
 </ul>
 
 <h2>Releases and cross compilation</h2>
 
-<p>The script <a href="./mk-release.sh">mk-release.sh</a> cross compiles <em>md2slides</em> for Windows, Max OS X, Linux (amd64) and Raspberry Pi (Raspbian/ARM7).
+<p>The script <a href="./mk-release.sh">mk-release.sh</a> cross compiles <em>md2slides</em> for Windows, Max OS X, Linux (amd64) and Raspberry Pi (Raspbian/ARM6 and ARM7).
 It places all the resulting executable programs in the <em>dist</em> folders.</p>
 
 <h2>windows issues</h2>
