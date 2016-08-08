@@ -55,6 +55,11 @@ header h1 {
      color: #FF6E1E;
 }
 
+header a, header a:link, header a:visited, header a:active, header a:hover, header a:focus {
+    color: #FF6E1E;
+    background-color: inherit;
+}
+
 a, a:link, a:visited {
      color: #76777B;
      background-color: inherit;
@@ -131,7 +136,7 @@ section {
      position: relative;
      display: inline-block;
      width: 100%;
-     height: 84%;
+     min-height: 84%;
      color: black;
      background-color: white;
      margin: 0;
@@ -198,7 +203,6 @@ aside ul > ul {
 }
 
 footer {
-     clear:all;
      position: relative;
      display: block;
      width: 100%;
