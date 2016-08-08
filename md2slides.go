@@ -43,7 +43,7 @@ import (
 
 const (
 	// Version of md2slides package
-	Version = "v0.0.3"
+	Version = "v0.0.4"
 )
 
 // Slide is the metadata about a slide to be generated.
