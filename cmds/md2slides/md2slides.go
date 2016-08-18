@@ -71,6 +71,7 @@ var (
 	showHelp          bool
 	showVersion       bool
 	showLicense       bool
+	showTemplate      bool
 	presentationTitle string
 	defaultHTML       = `<!DOCTYPE html>
 <html>
@@ -141,6 +142,7 @@ func init() {
 	flag.BoolVar(&showHelp, "h", false, "display help")
 	flag.BoolVar(&showVersion, "v", false, "display version")
 	flag.BoolVar(&showLicense, "l", false, "display license")
+	flag.BoolVar(&showTemplate, "t", false, "display the default template")
 	flag.StringVar(&presentationTitle, "title", "", "Presentation title")
 	flag.StringVar(&cssPath, "css", cssPath, "Specify the CSS file to use")
 	flag.StringVar(&templateFName, "template",
@@ -189,6 +191,10 @@ func main() {
 	}
 	if showLicense == true {
 		fmt.Printf(license, appname)
+		os.Exit(0)
+	}
+	if showTemplate == true {
+		fmt.Println(defaultHTML)
 		os.Exit(0)
 	}
 
