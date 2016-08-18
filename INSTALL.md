@@ -1,7 +1,8 @@
 
 # Installation
 
-*md2slides* is a command line program run from a shell like Bash. If you download the repository a compiled version is in the dist directory. The compiled binary matching your computer type and operating system can be copied to a bin directory in your PATH.
+*md2slides* is a command line program run from a shell like Bash. If you download the repository a compiled version is in 
+the dist directory. The compiled binary matching your computer type and operating system can be copied to a bin directory in your PATH.
 
 Compiled versions are available for Mac OS X (amd64 processor), Linux (amd64), Windows (amd64) and Rapsberry Pi (both ARM6 and ARM7)
 
@@ -17,7 +18,7 @@ Compiled versions are available for Mac OS X (amd64 processor), Linux (amd64), W
 
 1. Download **md2slides-binary-release.zip** from [github.com/caltechlibrary/md2slides/releases/latest](https://github.com/caltechlibrary/md2slides/releases/latest)
 2. Open the file manager find and unzip **md2slides-binary-release.zip**
-3. Look in the unziped folder and find *dist/windows/md2slides.exe*
+3. Look in the unziped folder and find *dist/windows-amd64/md2slides.exe*
 4. Drag (or copy) the *md2slides.exe* to a "bin" directory in your path
 5. Open Bash and and run `md2slides -h` to confirm your success
 
