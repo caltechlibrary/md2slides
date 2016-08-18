@@ -104,7 +104,7 @@ func main() {
 		os.Exit(0)
 	}
 	if showTemplate == true {
-		fmt.Println(defaultHTML)
+		fmt.Println(md2slides.DefaultTemplateSource)
 		os.Exit(0)
 	}
 
