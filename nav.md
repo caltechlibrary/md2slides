@@ -1,8 +1,7 @@
 
 + [Home](/)
 + [md2slides](./)
-+ [Source Code](https://github.com/caltechlibrary/md2slides)
-+ [README](readme.html)
-+ [INSTALL](installation.html)
++ [INSTALL](install.html)
 + [LICENSE](license.html)
++ [Github](https://github.com/caltechlibrary/md2slides)
 
