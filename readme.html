@@ -13,10 +13,9 @@
 <ul>
 <li><a href="/">Home</a></li>
 <li><a href="./">md2slides</a></li>
-<li><a href="https://github.com/caltechlibrary/md2slides">Source Code</a></li>
-<li><a href="readme.html">README</a></li>
-<li><a href="installation.html">INSTALL</a></li>
+<li><a href="install.html">INSTALL</a></li>
 <li><a href="license.html">LICENSE</a></li>
+<li><a href="https://github.com/caltechlibrary/md2slides">Github</a></li>
 </ul>
 
 </nav>
@@ -24,19 +23,49 @@
 <section>
 <h1>md2slides</h1>
 
-<p>Converts a Markdown file into a sequence of HTML5 slides.</p>
+<p>Convert a Markdown file into a sequence of HTML5 slides.</p>
 
 <ul>
 <li>Use Markdown to write your presentation in one file</li>
-<li>Separate slides by a new line, <code>--</code> and another new line (e.g. \n versus \r\n)</li>
+<li>Separate slides by &ldquo;&ndash;&rdquo; and a new line (e.g. \n versus \r\n)</li>
 <li>Apply the simple default template or use your own</li>
 <li>Control Layout and display with HTML5 and CSS</li>
+</ul>
+
+<p>Here&rsquo;s an example of a three slide presentation</p>
+
+<pre><code>    Welcome to [md2slides](../)
+    by R. S. Doiel, &lt;rsdoiel@caltech.edu&gt;
+
+    --
+
+    # md2slides
+
+    md2slides can generate multiple HTML5 pages from
+    one markdown file.  It splits the markdown file
+    on each &quot;--&quot; 
+
+    --
+
+    Thank you
+
+    Hope you enjoy [md2slides](https://github.com/caltechlbrary/md2slides)
+
+</code></pre>
+
+<p>If you save this <a href="example/presentation.md">file</a> as presentation.md it would
+generate the following webpages</p>
+
+<ul>
+<li><a href="example/00-presentation.html">00-presentation01.html</a></li>
+<li><a href="example/01-presentation.html">01-presentation02.html</a></li>
+<li><a href="example/02-presentation.html">02-presentation03.html</a></li>
 </ul>
 
 <h2>Releases and cross compilation</h2>
 
 <p>The script <a href="./mk-release.sh">mk-release.sh</a> cross compiles <em>md2slides</em> for Windows, Max OS X, Linux (amd64) and Raspberry Pi (Raspbian/ARM6 and ARM7).
-It places all the resulting executable programs in the <em>dist</em> folders.</p>
+It places all the resulting executable programs in the <em>dist</em> folders. See <a href="install.html">INSTALL.md</a> for instructions.</p>
 
 <h2>windows issues</h2>
 
