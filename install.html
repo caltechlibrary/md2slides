@@ -1,56 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>md2slides: A Markdown file to presentation slide converter</title>
-    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
-    <link href="css/site.css" rel="stylesheet" />
-<head>
+    <title>Caltech Library's Digital Library Development Sandbox</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/site.css">
+</head>
 <body>
-    <header>
-        <h1>md2slides: A Markdown file to presentation slide converter</h1>
-    </header>
-    <section><h1>Installation</h1>
+<header>
+<a href="http://library.caltech.edu"><img src="assets/liblogo.gif" alt="Caltech Library logo"></a>
+</header>
+<nav>
+<ul>
+<li><a href="/">Home</a></li>
+<li><a href="./">md2slides</a></li>
+<li><a href="install.html">INSTALL</a></li>
+<li><a href="license.html">LICENSE</a></li>
+<li><a href="https://github.com/caltechlibrary/md2slides">Github</a></li>
+</ul>
 
-<p><em>md2slides</em> is a command line program run from a shell like Bash. You can find compiled
-version in the <a href="https://github.com/rsdoiel/md2slides/releases/latest">releases</a>
-in the Github repository in a zip file named <em>md2slides-binary-release.zip</em>. Inside
-the zip file look for the directory that matches your computer and copy that someplace
-defined in your path (e.g. $HOME/bin).</p>
+</nav>
 
-<p>Compiled versions are available for Mac OS X (amd64 processor), Linux (amd64), Windows
-(amd64) and Rapsberry Pi (both ARM6 and ARM7)</p>
+<section>
+<h1>Installation</h1>
+
+<p><em>md2slides</em> is a command line program run from a shell like Bash. If you download the repository a compiled version is in
+the dist directory. The compiled binary matching your computer type and operating system can be copied to a bin directory in your PATH.</p>
+
+<p>Compiled versions are available for Mac OS X (amd64 processor), Linux (amd64), Windows (amd64) and Rapsberry Pi (both ARM6 and ARM7)</p>
 
 <h2>Mac OS X</h2>
 
 <ol>
-<li>Go to <a href="https://github.com/rsdoiel/md2slides/releases/latest">github.com/rsdoiel/md2slides/releases/latest</a></li>
-<li>Click on the green &ldquo;md2slides-binary-release.zip&rdquo; link and download</li>
-<li>Open a finder window and find the downloaded file and unzip it (e.g. md2slides-binary-release.zip)</li>
-<li>Look in the unziped folder and find dist/macosx-amd64/md2slides</li>
-<li>Drag (or copy) the <em>md2slides</em> to a &ldquo;bin&rdquo; directory in your path</li>
-<li>Open and &ldquo;Terminal&rdquo; and run <code>md2slides -h</code></li>
+<li>Download <strong>md2slides-binary-release.zip</strong> from <a href="https://github.com/caltechlibrary/md2slides/releases/latest">github.com/caltechlibrary/md2slides/releases/latest</a></li>
+<li>Open a new finder window, find and unzip <strong>md2slides-binary-release.zip</strong></li>
+<li>Look in the unziped folder and find <em>dist/maxosx-amd64/md2slides</em></li>
+<li>Drag (or copy) <em>md2slides</em> to a &ldquo;bin&rdquo; directory in your path</li>
+<li>Open and &ldquo;Terminal&rdquo; and run <code>md2slides -h</code> to confirm your success</li>
 </ol>
 
 <h2>Windows</h2>
 
 <ol>
-<li>Go to <a href="https://github.com/rsdoiel/md2slides/releases/latest">github.com/rsdoiel/md2slides/releases/latest</a></li>
-<li>Click on the green &ldquo;md2slides-binary-release.zip&rdquo; link and download</li>
-<li>Open the file manager find the downloaded file and unzip it (e.g. md2slides-binary-release.zip)</li>
-<li>Look in the unziped folder and find dist/windows-amd64/md2slides.exe</li>
+<li>Download <strong>md2slides-binary-release.zip</strong> from <a href="https://github.com/caltechlibrary/md2slides/releases/latest">github.com/caltechlibrary/md2slides/releases/latest</a></li>
+<li>Open the file manager find and unzip <strong>md2slides-binary-release.zip</strong></li>
+<li>Look in the unziped folder and find <em>dist/windows-amd64/md2slides.exe</em></li>
 <li>Drag (or copy) the <em>md2slides.exe</em> to a &ldquo;bin&rdquo; directory in your path</li>
-<li>Open Bash and and run <code>md2slides -h</code></li>
+<li>Open Bash and and run <code>md2slides -h</code> to confirm your success</li>
 </ol>
 
 <h2>Linux</h2>
 
 <ol>
-<li>Go to <a href="https://github.com/rsdoiel/md2slides/releases/latest">github.com/rsdoiel/md2slides/releases/latest</a></li>
-<li>Click on the green &ldquo;md2slides-binary-release.zip&rdquo; link and download</li>
-<li>find the downloaded zip file and unzip it (e.g. unzip ~/Downloads/md2slides-binary-release.zip)</li>
-<li>In the unziped directory and find for dist/linux-amd64/md2slides</li>
-<li>copy the <em>md2slides</em> to a &ldquo;bin&rdquo; directory (e.g. cp ~/Downloads/md2slides-binary-release/dist/linux-amd64/md2slides ~/bin/)</li>
-<li>From the shell prompt run <code>md2slides -h</code></li>
+<li>Download <strong>md2slides-binary-release.zip</strong> from <a href="https://github.com/caltechlibrary/md2slides/releases/latest">github.com/caltechlibrary/md2slides/releases/latest</a></li>
+<li>find and unzip <strong>md2slides-binary-release.zip</strong></li>
+<li>In the unziped directory and find for <em>dist/linux-amd64/md2slides</em></li>
+<li>copy the <em>md2slides</em> to a &ldquo;bin&rdquo; directory (e.g. cp ~/Downloads/md2slides-master/dist/linux-amd64/md2slides ~/bin/)</li>
+<li>From the shell prompt run <code>md2slides -h</code> to confirm your success</li>
 </ol>
 
 <h2>Raspberry Pi</h2>
@@ -58,30 +63,26 @@ defined in your path (e.g. $HOME/bin).</p>
 <p>If you are using a Raspberry Pi 2 or later use the ARM7 binary, ARM6 is only for the first generaiton Raspberry Pi.</p>
 
 <ol>
-<li>Go to <a href="https://github.com/rsdoiel/md2slides/releases/latest">github.com/rsdoiel/md2slides/releases/latest</a></li>
-<li>Click on the green &ldquo;md2slides-binary-release.zip&rdquo; link and download</li>
-<li>find the downloaded zip file and unzip it (e.g. unzip ~/Downloads/md2slides-binary-release.zip)</li>
-<li>In the unziped directory and find for dist/raspberrypi-arm7/md2slides</li>
-<li>copy the <em>md2slides</em> to a &ldquo;bin&rdquo; directory (e.g. cp ~/Downloads/md2slides-binary-release/dist/raspberrypi-arm7/md2slides ~/bin/)
+<li>Download <strong>md2slides-binary-release.zip</strong> from <a href="https://github.com/caltechlibrary/md2slides/releases/latest">github.com/caltechlibrary/md2slides/releases/latest</a></li>
+<li>find and unzip <strong>md2slides-binary-release.zip</strong></li>
+<li>In the unziped directory and find for <em>dist/raspberrypi-arm7/md2slides</em></li>
+<li>copy the <em>md2slides</em> to a &ldquo;bin&rdquo; directory (e.g. cp ~/Downloads/md2slides-master/dist/raspberrypi-arm7/md2slides ~/bin/)
 
 <ul>
 <li>if you are using an original Raspberry Pi you should copy the ARM6 version instead</li>
 </ul></li>
-<li>From the shell prompt run <code>md2slides -h</code></li>
+<li>From the shell prompt run <code>md2slides -h</code> to confirm your success</li>
 </ol>
-</section>
-    <nav><ul>
-<li><a href="/">home</a></li>
-<li><a href="./">md2slides</a></li>
-<li><a href="LICENSE">LICENSE</a></li>
-<li><a href="install.html">Install</a></li>
-<li><a href="https://github.com/rsdoiel/md2slides">Github</a></li>
-</ul>
-</nav>
-    <footer>
-    <p>copyright &copy; 2016 R. S. Doiel
-See: <a href="LICENSE">LICENSE</a></p>
 
-    </footer>
+</section>
+
+<footer>
+<span><h1><A href="http://caltech.edu">Caltech</a></h1></span>
+<span>&copy; 2015 - 2016 <a href="http://library.caltech.edu/CLS_Copyright.htm">Caltech library</a></span>
+<address>1200 E California Blvd, Mail Code 1-32, Pasadena, CA 91125-3200</address> 
+<span>Phone: <a href="tel:+1-626-395-3405">(626)395-3405</a></span>
+<span><a href="mailto:library@caltech.edu">Email Us</a></span>
+<a class="cl-hide" href="sitemap.xml">Site Map</a>
+</footer>
 </body>
 </html>
