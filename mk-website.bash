@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function softwareCheck() {
-    for CMD in mkpage md2slides; do
+    for CMD in mkpage mkslides; do
         APP=$(which $CMD)
         if [ "$APP" = "" ]; then
             echo "Skipping, missing $CMD"
@@ -24,7 +24,7 @@ function mkPage () {
 
 function mkExample () {
     cd example
-    md2slides presentation.md
+    mkslides presentation.md
     cd ..
 }
 
