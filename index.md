@@ -1,5 +1,5 @@
 
-# md2slides
+# mkslides
 
 Convert a Markdown file into a sequence of HTML5 slides.
 
@@ -11,14 +11,14 @@ Convert a Markdown file into a sequence of HTML5 slides.
 Here's an example of a three slide presentation
 
 ```
-    Welcome to [md2slides](../)
+    Welcome to [mkslides](../)
     by R. S. Doiel, <rsdoiel@caltech.edu>
 
     --
 
-    # md2slides
+    # mkslides
 
-    md2slides can generate multiple HTML5 pages from
+    mkslides can generate multiple HTML5 pages from
     one markdown file.  It splits the markdown file
     on each "--" 
 
@@ -26,7 +26,7 @@ Here's an example of a three slide presentation
 
     Thank you
 
-    Hope you enjoy [md2slides](https://github.com/caltechlbrary/md2slides)
+    Hope you enjoy [mkslides](https://github.com/caltechlbrary/mkslides)
 
 ```
 

@@ -1,5 +1,5 @@
 //
-// md2slides.go - A simple command line utility that uses Markdown
+// mkslides.go - A simple command line utility that uses Markdown
 // to generate a sequence of HTML5 pages that can be used for presentations.
 //
 // @author R. S. Doiel, <rsdoiel@caltech.edu>
@@ -17,7 +17,7 @@
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-package md2slides
+package mkslides
 
 import (
 	"bytes"
@@ -31,7 +31,7 @@ import (
 )
 
 const (
-	// Version of md2slides package
+	// Version of mkslides package
 	Version = "v0.0.4"
 )
 
@@ -49,7 +49,7 @@ type Slide struct {
 }
 
 var (
-	// The default HTML provided by md2slides package, you probably want to override this...
+	// The default HTML provided by mkslides package, you probably want to override this...
 	DefaultTemplateSource = `<!DOCTYPE html>
 <html>
 <head>

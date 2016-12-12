@@ -1,7 +1,7 @@
 
 + [Home](/)
-+ [md2slides](./)
++ [mkslides](./)
 + [INSTALL](install.html)
 + [LICENSE](license.html)
-+ [Github](https://github.com/caltechlibrary/md2slides)
++ [Github](https://github.com/caltechlibrary/mkslides)
 

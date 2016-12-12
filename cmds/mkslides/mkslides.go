@@ -1,5 +1,5 @@
 //
-// md2slides.go - A simple command line utility that uses Markdown
+// mkslides.go - A simple command line utility that uses Markdown
 // to generate a sequence of HTML5 pages that can be used for presentations.
 //
 // @author R. S. Doiel, <rsdoiel@caltech.edu>
@@ -29,11 +29,11 @@ import (
 	"text/template"
 
 	// Caltech Library packages
-	"github.com/caltechlibrary/md2slides"
+	"github.com/caltechlibrary/mkslides"
 )
 
 const (
-	version = md2slides.Version
+	version = mkslides.Version
 	license = `
 %s
 
@@ -62,7 +62,7 @@ var (
 
 	cssPath        string
 	templateFName  string
-	templateSource = md2slides.DefaultTemplateSource
+	templateSource = mkslides.DefaultTemplateSource
 )
 
 func init() {
@@ -104,7 +104,7 @@ func main() {
 		os.Exit(0)
 	}
 	if showTemplate == true {
-		fmt.Println(md2slides.DefaultTemplateSource)
+		fmt.Println(mkslides.DefaultTemplateSource)
 		os.Exit(0)
 	}
 
@@ -143,10 +143,10 @@ func main() {
 	}
 
 	// Build the slides
-	slides := md2slides.MarkdownToSlides(fname, presentationTitle, cssPath, src)
+	slides := mkslides.MarkdownToSlides(fname, presentationTitle, cssPath, src)
 	// Render the slides
 	for i, slide := range slides {
-		err := md2slides.MakeSlideFile(tmpl, slide)
+		err := mkslides.MakeSlideFile(tmpl, slide)
 		if err == nil {
 			// Note: Give some feed back when slide written successful
 			fmt.Fprintf(os.Stdout, "wrote %02d-%s.html\n", slide.CurNo, slide.FName)
