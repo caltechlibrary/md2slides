@@ -60,14 +60,14 @@ EXAMPLE
 
 Here's an example of a three slide presentation
 
-    Welcome to [mkslides](../)
+    Welcome to [%s](../)
     by R. S. Doiel, <rsdoiel@caltech.edu>
 
     --
 
-    # mkslides
+    # %s
 
-    mkslides can generate multiple HTML5 pages from
+    %s can generate multiple HTML5 pages from
     one markdown file.  It splits the markdown file
     on each "--" 
 
@@ -75,10 +75,10 @@ Here's an example of a three slide presentation
 
     Thank you
 
-    Hope you enjoy [mkslides](https://github.com/caltechlbrary/mkslides)
+    Hope you enjoy [%s](https://github.com/caltechlbrary/%s)
 
 
-If you save this as presentation.md and run "mkslides presentation.md" it would
+If you save this as presentation.md and run "%s presentation.md" it would
 generate the following webpages
 
 + toc-presentation.html
@@ -137,7 +137,7 @@ func main() {
 	cfg.UsageText = fmt.Sprintf(usage, appName)
 	cfg.DescriptionText = fmt.Sprintf(description, appName, appName)
 	cfg.OptionsText = "OPTIONS\n"
-	cfg.ExampleText = examples
+	cfg.ExampleText = fmt.Sprintf(examples, appName, appName, appName, appName, appName)
 
 	// Process flags and update the environment as needed.
 	if showHelp == true {
