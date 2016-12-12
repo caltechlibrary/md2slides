@@ -137,7 +137,7 @@ func main() {
 	cfg.UsageText = fmt.Sprintf(usage, appName)
 	cfg.DescriptionText = fmt.Sprintf(description, appName, appName)
 	cfg.OptionsText = "OPTIONS\n"
-	cfg.ExampleText = fmt.Sprintf(examples, appName, appName)
+	cfg.ExampleText = examples
 
 	// Process flags and update the environment as needed.
 	if showHelp == true {
