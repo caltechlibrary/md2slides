@@ -32,7 +32,7 @@ import (
 
 const (
 	// Version of mkslides package
-	Version = "v0.0.4"
+	Version = "v0.0.5"
 )
 
 // Slide is the metadata about a slide to be generated.
