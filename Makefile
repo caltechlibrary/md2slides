@@ -4,8 +4,11 @@
 #
 
 build:
-	go build -o bin/mkslides cmds/mkslides/mkslides.go
-	./mk-website.bash
+	env CGO_ENABLED=0 go build -o bin/mkslides cmds/mkslides/mkslides.go
+
+lint:
+	golint mkslides.go
+	golint cmds/mkslides/mkslides.go
 
 test:
 	go test
@@ -17,7 +20,6 @@ status:
 	git status
 
 save:
-	./mk-website.bash
 	git commit -am "Quick save"
 	git push origin master
 
@@ -30,5 +32,8 @@ release:
 	./mk-website.bash
 	./mk-release.bash	
 	
+website:
+	./mk-website.bash
+
 publish:
 	./publish.bash
