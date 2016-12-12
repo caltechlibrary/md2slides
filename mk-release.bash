@@ -11,4 +11,4 @@ for PROGNAME in mkslides; do
   env GOOS=darwin	GOARCH=amd64 go build -o dist/maxosx/$PROGNAME cmds/$PROGNAME/$PROGNAME.go
 done
 
-zip -r $REPONAME-release.zip README.md INSTALL LICENSE dist/* 
+zip -r $REPONAME-release.zip README.md INSTALL.md LICENSE dist/* 

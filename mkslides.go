@@ -1,5 +1,4 @@
-//
-// mkslides.go - A simple command line utility that uses Markdown
+// Package mkslides implements uses Markdown and templates
 // to generate a sequence of HTML5 pages that can be used for presentations.
 //
 // @author R. S. Doiel, <rsdoiel@caltech.edu>
@@ -33,6 +32,24 @@ import (
 const (
 	// Version of mkslides package
 	Version = "v0.0.5"
+
+	// LicenseText contains license text for cli using this module
+	LicenseText = `
+%s %s
+
+Copyright (c) 2016, Caltech
+All rights not granted herein are expressly reserved by Caltech.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+`
 )
 
 // Slide is the metadata about a slide to be generated.
@@ -46,10 +63,11 @@ type Slide struct {
 	Title   string
 	Content string
 	CSSPath string
+	JSPath  string
 }
 
 var (
-	// The default HTML provided by mkslides package, you probably want to override this...
+	// DefaultTemplateSource source provides the default HTML template for mkslides package, you probably want to override this...
 	DefaultTemplateSource = `<!DOCTYPE html>
 <html>
 <head>
@@ -142,7 +160,7 @@ var (
 )
 
 // MarkdownToSlides turns a markdown file into one or more Slide using the fname, title and cssPath provided
-func MarkdownToSlides(fname string, title string, cssPath string, src []byte) []*Slide {
+func MarkdownToSlides(fname, title, cssPath, jsPath string, src []byte) []*Slide {
 	var slides []*Slide
 
 	// Note: handle legacy CR/LF endings as well as normal LF line endings
@@ -165,6 +183,7 @@ func MarkdownToSlides(fname string, title string, cssPath string, src []byte) []
 			Title:   title,
 			Content: string(data),
 			CSSPath: cssPath,
+			JSPath:  jsPath,
 		})
 	}
 	return slides

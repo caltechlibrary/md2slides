@@ -65,7 +65,7 @@ This is slide three, just a random paragraph of text. Blah, blah, blah, blah, bl
 		"<h2>Slide Three</h2>",
 	}
 
-	slides := MarkdownToSlides("test.html", "This is just a test", "", []byte(src))
+	slides := MarkdownToSlides("test.html", "This is just a test", "", "", []byte(src))
 	if len(slides) != 3 {
 		t.Errorf("Was expected three slides %+v\n", slides)
 	}
