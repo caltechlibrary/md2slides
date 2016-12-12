@@ -23,6 +23,8 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path"
+	"strings"
 	"text/template"
 
 	// 3rd Part packages
@@ -160,15 +162,15 @@ var (
 )
 
 // MarkdownToSlides turns a markdown file into one or more Slide using the fname, title and cssPath provided
-func MarkdownToSlides(fname, title, cssPath, jsPath string, src []byte) []*Slide {
+func MarkdownToSlides(fname, title, cssPath, jsPath string, mdSource []byte) []*Slide {
 	var slides []*Slide
 
 	// Note: handle legacy CR/LF endings as well as normal LF line endings
-	if bytes.Contains(src, []byte("\r\n")) {
-		src = bytes.Replace(src, []byte("\r\n"), []byte("\n"), -1)
+	if bytes.Contains(mdSource, []byte("\r\n")) {
+		mdSource = bytes.Replace(mdSource, []byte("\r\n"), []byte("\n"), -1)
 	}
 	// Note: We're only spliting on line that contain "--", not lines ending with where text might end with "--"
-	mdSlides := bytes.Split(src, []byte("\n--\n"))
+	mdSlides := bytes.Split(mdSource, []byte("\n--\n"))
 
 	lastSlide := len(mdSlides) - 1
 	for i, s := range mdSlides {
@@ -196,7 +198,7 @@ func MakeSlide(wr io.Writer, tmpl *template.Template, slide *Slide) error {
 
 // MakeSlideFile this takes a template and slide and renders the results to a file.
 func MakeSlideFile(tmpl *template.Template, slide *Slide) error {
-	sname := fmt.Sprintf(`%02d-%s.html`, slide.CurNo, slide.FName)
+	sname := fmt.Sprintf(`%02d-%s.html`, slide.CurNo, strings.TrimSuffix(path.Base(slide.FName), path.Ext(slide.FName)))
 	fp, err := os.Create(sname)
 	if err != nil {
 		return fmt.Errorf("%s %s\n", sname, err)

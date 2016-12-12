@@ -25,11 +25,13 @@ import (
 	"io/ioutil"
 	"os"
 	"path"
+	"strings"
 	"text/template"
 
 	// Caltech Library packages
 	"github.com/caltechlibrary/cli"
 	"github.com/caltechlibrary/mkslides"
+	"github.com/caltechlibrary/tmplfn"
 )
 
 const (
@@ -171,12 +173,13 @@ func main() {
 	}
 
 	// Make sure we have a configured command to run
-	mdFName = cfg.CheckOption(mdFName, cfg.MergeEnv("markdown", mdFName), true)
-	templateFName = cfg.CheckOption(templateFName, cfg.MergeEnv("template", templateFName), false)
-	cssPath = cfg.CheckOption(cssPath, cfg.MergeEnv("css", cssPath), false)
-	jsPath = cfg.CheckOption(jsPath, cfg.MergeEnv("js", jsPath), false)
+	mdFName = cfg.CheckOption("markdown", cfg.MergeEnv("markdown", mdFName), true)
+	templateFName = cfg.MergeEnv("template", templateFName)
+	cssPath = cfg.MergeEnv("css", cssPath)
+	jsPath = cfg.MergeEnv("js", jsPath)
 
-	src, err := ioutil.ReadFile(mdFName)
+	// Read in the Markdown file
+	mdSrc, err := ioutil.ReadFile(mdFName)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err)
 		os.Exit(1)
@@ -184,28 +187,28 @@ func main() {
 
 	//NOTE: If template is provided, read it in and replace templateSource content
 	if templateFName != "" {
-		src, err := ioutil.ReadFile(templateFName)
+		tmplSrc, err := ioutil.ReadFile(templateFName)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%s %s\n", templateFName, err)
 			os.Exit(1)
 		}
-		templateSource = string(src)
+		templateSource = string(tmplSrc)
 	}
 
-	tmpl, err := template.New("slide").Parse(templateSource)
+	tmpl, err := template.New("slide").Funcs(tmplfn.Join(tmplfn.TimeMap, tmplfn.PageMap)).Parse(templateSource)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err)
 		os.Exit(1)
 	}
 
 	// Build the slides
-	slides := mkslides.MarkdownToSlides(mdFName, presentationTitle, cssPath, jsPath, src)
+	slides := mkslides.MarkdownToSlides(mdFName, presentationTitle, cssPath, jsPath, mdSrc)
 	// Render the slides
 	for i, slide := range slides {
 		err := mkslides.MakeSlideFile(tmpl, slide)
 		if err == nil {
 			// Note: Give some feed back when slide written successful
-			fmt.Fprintf(os.Stdout, "wrote %02d-%s.html\n", slide.CurNo, slide.FName)
+			fmt.Fprintf(os.Stdout, "Wrote %02d-%s.html\n", slide.CurNo, strings.TrimSuffix(path.Base(slide.FName), path.Ext(slide.FName)))
 		} else {
 			// Note: Display an error if we have a problem
 			fmt.Fprintf(os.Stderr, "Can't process slide %d, %s\n", i, err)
