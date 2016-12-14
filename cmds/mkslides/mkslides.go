@@ -193,8 +193,6 @@ func main() {
 		tmplFuncs = tmplfn.Join(tmplfn.TimeMap, tmplfn.PageMap)
 	)
 
-	fmt.Printf("DEBUG templateFNames: %s\n", templateFNames)
-
 	//NOTE: If template is provided, read it in and replace templateSource content
 	if len(templateFNames) > 0 {
 		templateSources := strings.Split(templateFNames, ":")

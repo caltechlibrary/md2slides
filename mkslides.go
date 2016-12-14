@@ -33,7 +33,7 @@ import (
 
 const (
 	// Version of mkslides package
-	Version = "v0.0.6"
+	Version = "v0.0.7"
 
 	// LicenseText contains license text for cli using this module
 	LicenseText = `
