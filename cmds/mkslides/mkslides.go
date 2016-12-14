@@ -195,6 +195,7 @@ func main() {
 		templateSource = string(tmplSrc)
 	}
 
+	//FIXME: Need to support an artbitrary number of templates for complex presentations
 	tmpl, err := template.New("slide").Funcs(tmplfn.Join(tmplfn.TimeMap, tmplfn.PageMap)).Parse(templateSource)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err)
