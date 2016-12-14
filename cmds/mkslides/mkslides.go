@@ -40,7 +40,7 @@ const (
 	description = `
 SYNOPSIS
 
-Convert a Markdown file into a sequence of HTML5 slides.
+%s converts a Markdown file into a sequence of HTML5 slides.
 
 + Use Markdown to write your presentation in one file
 + Separate slides by "--" and a new line (e.g. \n versus \r\n)
@@ -60,14 +60,14 @@ EXAMPLE
 
 Here's an example of a three slide presentation
 
-    Welcome to [mkslides](../)
+    Welcome to [%s](../)
     by R. S. Doiel, <rsdoiel@caltech.edu>
 
     --
 
-    # mkslides
+    # %s
 
-    mkslides can generate multiple HTML5 pages from
+    %s can generate multiple HTML5 pages from
     one markdown file.  It splits the markdown file
     on each "--" 
 
@@ -75,16 +75,15 @@ Here's an example of a three slide presentation
 
     Thank you
 
-    Hope you enjoy [mkslides](https://github.com/caltechlbrary/mkslides)
+    Hope you enjoy [%s](https://github.com/caltechlbrary/%s)
 
 
-If you save this as presentation.md and run "mkslides presentation.md" it would
+If you save this as presentation.md and run "%s presentation.md" it would
 generate the following webpages
 
-+ toc-presentation.html
-+ 00-presentation01.html
-+ 01-presentation02.html
-+ 02-presentation03.html
++ 00-presentation.html
++ 01-presentation.html
++ 02-presentation.html
 
 `
 )
@@ -99,7 +98,7 @@ var (
 	mdFName           string
 	presentationTitle string
 	showTemplate      bool
-	templateFName     string
+	templateFNames    string
 	templateSource    = mkslides.DefaultTemplateSource
 )
 
@@ -123,8 +122,8 @@ func init() {
 	flag.StringVar(&presentationTitle, "presentation-title", "", "Presentation title")
 	flag.BoolVar(&showTemplate, "s", false, "display the default template")
 	flag.BoolVar(&showTemplate, "show-template", false, "display the default template")
-	flag.StringVar(&templateFName, "t", "", "Specify an HTML template to use")
-	flag.StringVar(&templateFName, "template", "", "Specify an HTML template to use")
+	flag.StringVar(&templateFNames, "t", "", "A colon delimited list of HTML templates to use")
+	flag.StringVar(&templateFNames, "templates", "", "A colon delimited list of HTML templates to use")
 }
 
 func main() {
@@ -135,9 +134,9 @@ func main() {
 	// Configure app
 	cfg := cli.New(appName, "MKSLIDES", fmt.Sprintf(mkslides.LicenseText, appName, mkslides.Version), mkslides.Version)
 	cfg.UsageText = fmt.Sprintf(usage, appName)
-	cfg.DescriptionText = fmt.Sprintf(description, appName, appName)
+	cfg.DescriptionText = fmt.Sprintf(description, appName)
 	cfg.OptionsText = "OPTIONS\n"
-	cfg.ExampleText = fmt.Sprintf(examples, appName, appName)
+	cfg.ExampleText = fmt.Sprintf(examples, appName, appName, appName, appName, appName, appName)
 
 	// Process flags and update the environment as needed.
 	if showHelp == true {
@@ -168,34 +167,41 @@ func main() {
 		case ".js":
 			jsPath = arg
 		default:
-			templateFName = arg
+			if len(templateFNames) > 0 {
+				templateFNames = strings.Join([]string{templateFNames, arg}, ":")
+			} else {
+				templateFNames = arg
+			}
 		}
 	}
 
-	// Make sure we have a configured command to run
+	// Make sure we have a configured command to run after populating from command line args
 	mdFName = cfg.CheckOption("markdown", cfg.MergeEnv("markdown", mdFName), true)
-	templateFName = cfg.MergeEnv("template", templateFName)
+	templateFNames = cfg.MergeEnv("templates", templateFNames)
 	cssPath = cfg.MergeEnv("css", cssPath)
 	jsPath = cfg.MergeEnv("js", jsPath)
 
 	// Read in the Markdown file
 	mdSrc, err := ioutil.ReadFile(mdFName)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "%s\n", err)
+		fmt.Fprintf(os.Stderr, "%s, %s\n", mdFName, err)
 		os.Exit(1)
 	}
 
-	//NOTE: If template is provided, read it in and replace templateSource content
-	if templateFName != "" {
-		tmplSrc, err := ioutil.ReadFile(templateFName)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "%s %s\n", templateFName, err)
-			os.Exit(1)
-		}
-		templateSource = string(tmplSrc)
-	}
+	var (
+		tmpl      *template.Template
+		tmplFuncs = tmplfn.Join(tmplfn.TimeMap, tmplfn.PageMap)
+	)
 
-	tmpl, err := template.New("slide").Funcs(tmplfn.Join(tmplfn.TimeMap, tmplfn.PageMap)).Parse(templateSource)
+	fmt.Printf("DEBUG templateFNames: %s\n", templateFNames)
+
+	//NOTE: If template is provided, read it in and replace templateSource content
+	if len(templateFNames) > 0 {
+		templateSources := strings.Split(templateFNames, ":")
+		tmpl, err = tmplfn.Assemble(tmplFuncs, templateSources...)
+	} else {
+		tmpl, err = tmplfn.AssembleSources(tmplFuncs, templateSource)
+	}
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err)
 		os.Exit(1)

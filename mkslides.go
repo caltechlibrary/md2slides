@@ -176,7 +176,7 @@ func MarkdownToSlides(fname, title, cssPath, jsPath string, mdSource []byte) []*
 	for i, s := range mdSlides {
 		data := blackfriday.MarkdownCommon(s)
 		slides = append(slides, &Slide{
-			FName:   fname,
+			FName:   strings.TrimSuffix(path.Base(fname), path.Ext(fname)),
 			CurNo:   i,
 			PrevNo:  (i - 1),
 			NextNo:  (i + 1),
